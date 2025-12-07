@@ -11,10 +11,10 @@ interface Acteur {
   idFilms: number[];   // 🔥 ATTENTION : array d'ID, pas Movie[]
 }
 
-const BlocActeurFilms = ({ idActeur = 1 }: { idActeur?: number }) => {
+const BlocActeurFilms = ({ idActeur = 2 }: { idActeur?: number }) => {
 
-  const [acteur, setActeur] = React.useState<Acteur | null>(null)
-  const [films, setFilms] = React.useState<Movie[]>([])  // 🔥 films séparés
+  const [acteur, setActeur] = React.useState<Acteur>()
+  const [films, setFilms] = React.useState<Movie[]>([])
   const [loading, setLoading] = React.useState(true)
 
   useEffect(() => {
@@ -22,33 +22,31 @@ const BlocActeurFilms = ({ idActeur = 1 }: { idActeur?: number }) => {
       setLoading(true);
 
       try {
-        // 1️⃣ récupérer l'acteur
-        const { data: acteurData, error: errActeur } = await supabase
+        const { data, error } = await supabase
           .from('acteurs')
           .select('*')
           .eq('id', idActeur)
           .limit(1);
 
-        if (errActeur) {
-          console.log('Erreur acteur : ', errActeur.message);
+        if (error) {
+          console.log('Erreur acteur : ', error.message);
           return;
         }
 
-        if (!acteurData || acteurData.length === 0) {
-          console.log("Aucun acteur trouvé");
+        if (!data || data.length === 0) {
+          console.log("Aucun acteur trouvé", error);
           return;
         }
 
-        const acteur = acteurData[0];
+        const acteur = data[0];
         setActeur(acteur);
-
+        
         // Si pas de films → stop
         if (!acteur.idFilms || acteur.idFilms.length === 0) {
           setFilms([]);
           return;
         }
 
-        // 2️⃣ récupérer les films liés
         const { data: filmsData, error: errFilms } = await supabase
           .from('film')
           .select('*')
