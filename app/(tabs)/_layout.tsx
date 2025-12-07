@@ -24,10 +24,16 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="films/page"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Films',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="film.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="films/[id]/page"
+        options={{
+          href: null, // Cache cette page du menu
         }}
       />
     </Tabs>

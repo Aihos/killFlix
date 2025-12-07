@@ -1,80 +1,114 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
+import { ActivityIndicator, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import HeroHeader from '@/components/heroHeader';
+import HeaderPage from '@/components/headerPage';
+import VedetteFilm from '@/components/VedetteFilm';
+import { Movie } from '@/utils/movieUtills'
+import React, { use, useEffect, useState } from 'react';
+import {supabase} from '@/lib/supabase'
+import RecemmentAjoute from '@/components/RecemmentAjoute';
+
+
+
+
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const [movie, setMovie] = useState<Movie | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [allMovies, setAllMovies] = useState<Movie[]>([]);
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  /*  const fetchLatestMovie = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const { data, error } = await supabase
+          .from('film')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(1);
+
+        if (error) {
+          setError(error.message);
+        } else if (data && data.length > 0) {
+          setMovie(data[0] as Movie);
+        } else {
+          setError('Aucun film disponible');
+        }
+      } catch {
+        setError('Erreur de connexion');
+      }
+
+      setLoading(false);
+    }; */
+
+    const fetchAllMovies = async () => {
+
+      setLoading(true);
+      setError(null);
+
+      try{
+        const {data, error} = await supabase
+        .from('film')
+        .select('*')
+        .order('created_at', {ascending : false})
+        .limit(5)
+
+       if (error) {
+          setError(error.message);
+        } else if (data && data.length > 0) {
+          setAllMovies(data as Movie[]);
+          setMovie(data[1] as Movie);
+          console.log(allMovies)
+        } else {
+          setError('Aucun film disponible');
+        }
+
+
+      } catch (e) {
+
+        console.log(e)
+      }
+      setLoading(false);
+    }
+
+
+
+  useEffect(() => {
+    fetchAllMovies();
+   /*  fetchLatestMovie(); */
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text style={{ color: '#fff', marginTop: 10 }}>Chargement...</Text>
+      </View>
+    );
+  }
+
+  if (error || !movie) {
+    return (
+      <View style={styles.centered}>
+        <Text style={{ color: '#fff', fontSize: 16 }}>
+          Impossible de charger le film
+        </Text>
+        <Text style={{ color: '#999', marginTop: 8, fontSize: 12 }}>
+          {error || 'Aucune donnée disponible'}
+        </Text>
+      </View>
+    );
+  }
+
+  return (
+    <ScrollView>
+      <HeaderPage />
+      <HeroHeader titre={movie.nom_film} url={movie.img_film} id={movie.id}/>
+      <VedetteFilm allMovies={allMovies}  />
+      <RecemmentAjoute />
+    </ScrollView>
   );
 }
 
@@ -94,5 +128,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: 'absolute',
+  },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
