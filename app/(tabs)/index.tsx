@@ -9,6 +9,7 @@ import React, { use, useEffect, useState } from 'react';
 import {supabase} from '@/lib/supabase'
 import RecemmentAjoute from '@/components/RecemmentAjoute';
 import BlocActeurFilms from '@/components/BlocActeurFilms';
+import MiseEnAvant from '@/components/MiseEnAvant';
 
 
 
@@ -110,6 +111,7 @@ export default function HomeScreen() {
       <VedetteFilm allMovies={allMovies}  />
       <RecemmentAjoute allMovies={allMovies} />
       <BlocActeurFilms />
+      < MiseEnAvant allMovies={allMovies}/>
     </ScrollView>
   );
 }
