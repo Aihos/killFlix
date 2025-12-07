@@ -8,6 +8,7 @@ import { Movie } from '@/utils/movieUtills'
 import React, { use, useEffect, useState } from 'react';
 import {supabase} from '@/lib/supabase'
 import RecemmentAjoute from '@/components/RecemmentAjoute';
+import BlocActeurFilms from '@/components/BlocActeurFilms';
 
 
 
@@ -107,7 +108,8 @@ export default function HomeScreen() {
       <HeaderPage />
       <HeroHeader titre={movie.nom_film} url={movie.img_film} id={movie.id}/>
       <VedetteFilm allMovies={allMovies}  />
-      <RecemmentAjoute />
+      <RecemmentAjoute allMovies={allMovies} />
+      <BlocActeurFilms />
     </ScrollView>
   );
 }
