@@ -10,40 +10,13 @@ import {supabase} from '@/lib/supabase'
 import RecemmentAjoute from '@/components/RecemmentAjoute';
 import BlocActeurFilms from '@/components/BlocActeurFilms';
 import MiseEnAvant from '@/components/MiseEnAvant';
-
-
-
-
+import { BlurView } from 'expo-blur';
 
 export default function HomeScreen() {
   const [movie, setMovie] = useState<Movie | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [allMovies, setAllMovies] = useState<Movie[]>([]);
-
-  /*  const fetchLatestMovie = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const { data, error } = await supabase
-          .from('film')
-          .select('*')
-          .order('created_at', { ascending: false })
-          .limit(1);
-
-        if (error) {
-          setError(error.message);
-        } else if (data && data.length > 0) {
-          setMovie(data[0] as Movie);
-        } else {
-          setError('Aucun film disponible');
-        }
-      } catch {
-        setError('Erreur de connexion');
-      }
-
-      setLoading(false);
-    }; */
 
     const fetchAllMovies = async () => {
 
@@ -105,27 +78,45 @@ export default function HomeScreen() {
   }
 
   return (
-    <ScrollView>
+    <ScrollView  style={styles.container}>
         <HeaderPage />
         <HeroHeader titre={movie.nom_film} url={movie.img_film} id={movie.id}/>
+        <BlurView intensity={60} tint="dark" style={styles.stepContainer}>
         <VedetteFilm allMovies={allMovies}  />
         <RecemmentAjoute allMovies={allMovies} />
         <BlocActeurFilms />
         < MiseEnAvant allMovies={allMovies}/>
+        </BlurView>
       </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+   zIndex: 0,
+    position: 'relative',
+    paddingTop: 15,
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
+ stepContainer: {
+  zIndex: 2,
+  marginTop: -20,
+  paddingTop: 20,
+  gap: 8,
+  marginBottom: 8,
+ /*  borderWidth: 1, */
+ /*  borderColor: 'rgba(28, 169, 0, 1)', */
+  borderRadius: 12,
+  paddingBottom: 16,
+  paddingHorizontal: 0,
+  overflow: 'hidden',
+  backgroundColor: 'rgba(35, 10, 10, 0.6)',
+},
   reactLogo: {
     height: 178,
     width: 290,

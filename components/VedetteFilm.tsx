@@ -6,7 +6,7 @@ import { Movie } from '@/utils/movieUtills'
 const VedetteFilm = ({allMovies} : {allMovies: Movie[]}) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.textHDeuxVedette} >VedetteFilm</Text>
+      <Text style={styles.textHDeuxVedette} >Films en Vedette</Text>
       <CarrouselFilmVedette allMovies={allMovies}  />
     </View>
   )
@@ -15,18 +15,17 @@ const VedetteFilm = ({allMovies} : {allMovies: Movie[]}) => {
 export default VedetteFilm
 
 const styles = StyleSheet.create({
-
-    container : {
-        flex:1,
-        justifyContent:'center',
-    },
-    textHDeuxVedette:{
-        fontSize:24,
-        fontWeight:'bold',
-        textAlign:'center',
-        color:'#fff',
-        marginBottom:20,
-    }
-
-
+  container : {
+    flex:1,
+    justifyContent:'center',
+    paddingVertical:40,
+  },
+  textHDeuxVedette:{
+    fontSize:24,
+    fontWeight:'bold',
+    textAlign:'center',
+    color:'#fff',
+    marginBottom:20,
+    textTransform:'uppercase',
+  }
 })

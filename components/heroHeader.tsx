@@ -20,7 +20,7 @@ export default function HeroHeader({titre, url, id}: {titre: string, url: string
         style={styles.image}
         >
             <LinearGradient
-    colors={['rgba(0,0,0,0.1)','rgba(0,0,0,0.9)']}
+    colors={['rgba(0,0,0,0.1)','#230a0a82']}
     style={styles.gradient}
     />
   <Text style={styles.textTitreHeroBanner}>{titre}</Text> 
