@@ -85,7 +85,7 @@ export default function HomeScreen() {
   if (loading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#cf4f4f" />
         <Text style={{ color: '#fff', marginTop: 10 }}>Chargement...</Text>
       </View>
     );
@@ -106,13 +106,13 @@ export default function HomeScreen() {
 
   return (
     <ScrollView>
-      <HeaderPage />
-      <HeroHeader titre={movie.nom_film} url={movie.img_film} id={movie.id}/>
-      <VedetteFilm allMovies={allMovies}  />
-      <RecemmentAjoute allMovies={allMovies} />
-      <BlocActeurFilms />
-      < MiseEnAvant allMovies={allMovies}/>
-    </ScrollView>
+        <HeaderPage />
+        <HeroHeader titre={movie.nom_film} url={movie.img_film} id={movie.id}/>
+        <VedetteFilm allMovies={allMovies}  />
+        <RecemmentAjoute allMovies={allMovies} />
+        <BlocActeurFilms />
+        < MiseEnAvant allMovies={allMovies}/>
+      </ScrollView>
   );
 }
 

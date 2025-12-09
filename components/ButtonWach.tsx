@@ -19,7 +19,7 @@ export default ButtonWach
 const styles = StyleSheet.create({
 
     btnWatch : {
-        backgroundColor : "#ffd900ff",
+        backgroundColor : "#FF7E7Eff",
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'center',

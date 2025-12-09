@@ -41,7 +41,7 @@ const FilmsGallery = () => {
   if (loading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#cf4f4f" />
         <Text style={{ color: '#fff', marginTop: 10 }}>Chargement...</Text>
       </View>
     );
