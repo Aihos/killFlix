@@ -99,7 +99,7 @@ const HeaderPage = () => {
         <>
             <View style={styles.headerContainer}>
                 <TouchableOpacity onPress={() => router.push('/')}>
-                    <Image source={"https://media.pathe.fr/files/logo/logo.svg"} style={{ width: 100, height: 50 }} />
+                    <Image source={"https://media.pathe.fr/files/logo/logo.svg"} style={{ width: 50, height: 50 }} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btn} onPress={() => setIsSearchOpen(true)}>
                     <Loupe />

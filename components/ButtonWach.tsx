@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
         borderRadius:10,
         flex:1,
         width:'100%',
+        paddingHorizontal:10,
     }, 
     textWatch : {
         padding:12,
