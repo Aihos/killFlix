@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     flex: 1,
    zIndex: 0,
     position: 'relative',
-    paddingTop: 15,
+     paddingBottom: 35, 
   },
   titleContainer: {
     flexDirection: 'row',

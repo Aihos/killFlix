@@ -38,7 +38,6 @@ const CarrouselFilmVedette = ({allMovies}: {allMovies:Movie[]}) => {
          <ImageBackground source={{ uri: allMovies[getMovieIndex(0)].img_film }} style={styles.imgCarrousel1} imageStyle={{ borderRadius: 10 }} />
        </TouchableOpacity>
      </Link>
-
      <Link href={`/films/${allMovies[getMovieIndex(-1)].id}/page`} asChild>
        <TouchableOpacity style={{zIndex:2}}>
          <ImageBackground source={{ uri: allMovies[getMovieIndex(-1)].img_film }} style={styles.imgCarrousel2} imageStyle={{ borderRadius: 10 }} />
